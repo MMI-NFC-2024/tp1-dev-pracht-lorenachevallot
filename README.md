@@ -1,6 +1,7 @@
 <!-- 
 nom : Chevallot 
-prénom : loréna  
+prénom : loréna
+lien Netlify: thriving-kataifi-e4cbac.netlify.app 
 -->
 
 # Astro Starter Kit: Basics
