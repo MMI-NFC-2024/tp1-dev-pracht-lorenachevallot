@@ -5,9 +5,7 @@ import PlotFigure from "../components/PlotFigure.astro";
 import penguins from "../assets/penguin.json";
 import * as Plot from "@observablehq/plot";
 import weather from "../assets/sftemp.json";
-
-//Version avec le htl qui crée une erreur
-import htl from "htl";
+import olympians from "../assets/olympians.json";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -15,65 +13,54 @@ import htl from "htl";
 
 <Layout class="bg-gray-50 min-h-screen py-12 px-6 md:px-12">
 	<h1
-		class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-12 select-none"
+		class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-12 select-none mt-16"
 	>
 		TP N°1
 	</h1>
 
-	<div>
-		<details
-			class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden"
+	<details
+		class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden p-6 mx-4"
+	>
+		<summary
+			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
 		>
-			<summary
-				class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
-			>
-			</summary>
-			<h1>Représentations des penguins</h1>
+			Représentations des penguins
+		</summary>
 
-			<PlotFigure
-				options={{
-					marks: [
-						Plot.dot(penguins, {
-							x: "culmen_length_mm",
-							y: "culmen_depth_mm",
-							stroke: "species",
-						}),
-					],
-				}}
-			/>
-		</details>
-
-		<h1>Représentation de la température</h1>
-	</div>
-	<div class="px-6 py-4">
 		<PlotFigure
 			options={{
-				y: { nice: true },
-				color: {
-					domain: [45, 75],
-					scheme: "turbo",
-					legend: true,
-					ticks: 7,
-					label: "temperature (°F)",
-				},
 				marks: [
-					Plot.line(weather, {
-						x: "date",
-						y: "high",
-						stroke: "url(#gradient)",
-						curve: "step-before",
+					Plot.dot(penguins, {
+						x: "culmen_length_mm",
+						y: "culmen_depth_mm",
+						stroke: "species",
 					}),
-
-					(_index, { y, color }) => htl.svg`<defs>
-   <linearGradient id="gradient" gradientUnits="userSpaceOnUse"
-     x1=0 x2=0 y1=${y(45)} y2=${y(75)}>${d3.ticks(0, 1, 10).map(
-			(t) =>
-				htl.svg`<stop
-                  offset=${t * 100}%
-                  stop-color=${color(45 * (1 - t) + 75 * t)} />`,
-		)}`,
 				],
 			}}
 		/>
-	</div>
+	</details>
+	<details
+		class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden p-6 mx-4"
+	>
+		<summary
+			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
+		>
+			Représentations des tailles des athlètes
+		</summary>
+
+		<PlotFigure
+			options={{
+				marks: [
+					Plot.hexagon(
+						olympians,
+						Plot.hexbin(
+							{ fill: "count" },
+							{ x: "weight", y: "height", symbol: "square" },
+						),
+					),
+				],
+				color: { scheme: "YlGnBu" },
+			}}
+		/>
+	</details>
 </Layout>
