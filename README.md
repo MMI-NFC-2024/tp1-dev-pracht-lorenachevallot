@@ -1,7 +1,8 @@
 <!-- 
 nom : Chevallot 
 prénom : loréna
-lien Netlify: thriving-kataifi-e4cbac.netlify.app 
+lien Netlify: thriving-kataifi-e4cbac.netlify.app
+lien observable : https://observablehq.com/@observablehq/plot-gradient-encoding
 -->
 
 # Astro Starter Kit: Basics

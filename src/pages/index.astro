@@ -4,8 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import PlotFigure from "../components/PlotFigure.astro";
 import penguins from "../assets/penguin.json";
 import * as Plot from "@observablehq/plot";
-import olympians from "../assets/untitled olympians.json";
-import weather from "../assets/weather.json";
+import weather from "../assets/sftemp.json";
+import htl from "htl";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -40,36 +40,37 @@ import weather from "../assets/weather.json";
 				}}
 			/>
 		</details>
-		<h1>Représentation des athlètes</h1>
-	</div>
-	<div class="px-6 py-4">
-		<PlotFigure
-			options={{
-				marks: [
-					Plot.auto(olympians, {
-						x: "weight",
-						y: "height",
-						color: "count",
-					}),
-				],
-			}}
-		/>
-	</div>
-	
+
 	<h1>Représentation de la température</h1>
-	</div>
-	<div class="px-6 py-4">
-		<PlotFigure
-			options={{
-				marks: [
-					Plot.auto(weather, {
-						x: "weight",
-						y: "height",
-						color: "count",
-					}),
-				],
-			}}
-		/>
-	</div>
-	
 </Layout>
+<div class="px-6 py-4">
+	<PlotFigure
+		options={{
+			y: { nice: true },
+			color: {
+				domain: [45, 75],
+				scheme: "turbo",
+				legend: true,
+				ticks: 7,
+				label: "temperature (°F)",
+			},
+			marks: [
+				Plot.line(weather, {
+					x: "date",
+					y: "high",
+					stroke: "url(#gradient)",
+					curve: "step-before",
+				}),
+
+				(_index, { y, color }) => htl.svg`<defs>
+   <linearGradient id="gradient" gradientUnits="userSpaceOnUse"
+     x1=0 x2=0 y1=${y(45)} y2=${y(75)}>${d3.ticks(0, 1, 10).map(
+			(t) =>
+				htl.svg`<stop
+                  offset=${t * 100}%
+                  stop-color=${color(45 * (1 - t) + 75 * t)} />`,
+		)}`,
+			],
+		}}
+	/>
+</div>
