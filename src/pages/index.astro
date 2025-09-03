@@ -55,4 +55,21 @@ import weather from "../assets/weather.json";
 			}}
 		/>
 	</div>
+	
+	<h1>Représentation de la température</h1>
+	</div>
+	<div class="px-6 py-4">
+		<PlotFigure
+			options={{
+				marks: [
+					Plot.auto(weather, {
+						x: "weight",
+						y: "height",
+						color: "count",
+					}),
+				],
+			}}
+		/>
+	</div>
+	
 </Layout>
