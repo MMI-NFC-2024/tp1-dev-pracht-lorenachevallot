@@ -5,6 +5,8 @@ import PlotFigure from "../components/PlotFigure.astro";
 import penguins from "../assets/penguin.json";
 import * as Plot from "@observablehq/plot";
 import weather from "../assets/sftemp.json";
+
+//Version avec le htl qui crée une erreur
 import htl from "htl";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -41,28 +43,28 @@ import htl from "htl";
 			/>
 		</details>
 
-	<h1>Représentation de la température</h1>
-</Layout>
-<div class="px-6 py-4">
-	<PlotFigure
-		options={{
-			y: { nice: true },
-			color: {
-				domain: [45, 75],
-				scheme: "turbo",
-				legend: true,
-				ticks: 7,
-				label: "temperature (°F)",
-			},
-			marks: [
-				Plot.line(weather, {
-					x: "date",
-					y: "high",
-					stroke: "url(#gradient)",
-					curve: "step-before",
-				}),
+		<h1>Représentation de la température</h1>
+	</div>
+	<div class="px-6 py-4">
+		<PlotFigure
+			options={{
+				y: { nice: true },
+				color: {
+					domain: [45, 75],
+					scheme: "turbo",
+					legend: true,
+					ticks: 7,
+					label: "temperature (°F)",
+				},
+				marks: [
+					Plot.line(weather, {
+						x: "date",
+						y: "high",
+						stroke: "url(#gradient)",
+						curve: "step-before",
+					}),
 
-				(_index, { y, color }) => htl.svg`<defs>
+					(_index, { y, color }) => htl.svg`<defs>
    <linearGradient id="gradient" gradientUnits="userSpaceOnUse"
      x1=0 x2=0 y1=${y(45)} y2=${y(75)}>${d3.ticks(0, 1, 10).map(
 			(t) =>
@@ -70,7 +72,8 @@ import htl from "htl";
                   offset=${t * 100}%
                   stop-color=${color(45 * (1 - t) + 75 * t)} />`,
 		)}`,
-			],
-		}}
-	/>
-</div>
+				],
+			}}
+		/>
+	</div>
+</Layout>
