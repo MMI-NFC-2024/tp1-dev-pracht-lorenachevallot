@@ -2,25 +2,57 @@
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
 import PlotFigure from "../components/PlotFigure.astro";
-import penguins from "../components/Penguin.astro";
+import penguins from "../assets/penguin.json";
+import * as Plot from "@observablehq/plot";
+import olympians from "../assets/untitled olympians.json";
+import weather from "../assets/weather.json";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
+<Layout class="bg-gray-50 min-h-screen py-12 px-6 md:px-12">
+	<h1
+		class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-12 select-none"
+	>
+		TP N°1
+	</h1>
+
 	<div>
-		<h1>Penguins</h1>
+		<details
+			class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden"
+		>
+			<summary
+				class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
+			>
+			</summary>
+			<h1>Représentations des penguins</h1>
+
+			<PlotFigure
+				options={{
+					marks: [
+						Plot.dot(penguins, {
+							x: "culmen_length_mm",
+							y: "culmen_depth_mm",
+							stroke: "species",
+						}),
+					],
+				}}
+			/>
+		</details>
+		<h1>Représentation des athlètes</h1>
+	</div>
+	<div class="px-6 py-4">
 		<PlotFigure
 			options={{
 				marks: [
-					Plot.dot(penguins, {
-						x: "culmen_length_mm",
-						y: "culmen_depth_mm",
+					Plot.auto(olympians, {
+						x: "weight",
+						y: "height",
+						color: "count",
 					}),
 				],
 			}}
 		/>
 	</div>
-	); }
 </Layout>
