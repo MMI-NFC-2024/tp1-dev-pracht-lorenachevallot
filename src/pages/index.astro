@@ -6,6 +6,7 @@ import penguins from "../assets/penguin.json";
 import * as Plot from "@observablehq/plot";
 import weather from "../assets/sftemp.json";
 import olympians from "../assets/olympians.json";
+import volcano from "../assets/volcano.json";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -22,7 +23,7 @@ import olympians from "../assets/olympians.json";
 		class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden p-6 mx-4"
 	>
 		<summary
-			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
+			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors select-none"
 		>
 			Représentations des penguins
 		</summary>
@@ -43,7 +44,7 @@ import olympians from "../assets/olympians.json";
 		class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden p-6 mx-4"
 	>
 		<summary
-			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors select-none"
+			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors select-none"
 		>
 			Représentations des tailles des athlètes
 		</summary>
@@ -60,6 +61,28 @@ import olympians from "../assets/olympians.json";
 					),
 				],
 				color: { scheme: "YlGnBu" },
+			}}
+		/>
+	</details>
+	<details
+		class="mb-6 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 overflow-hidden p-6 mx-4"
+	>
+		<summary
+			class="cursor-pointer px-6 py-4 text-lg md:text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors select-none"
+		>
+			Représentations de la température des volcans
+		</summary>
+
+		<PlotFigure
+			options={{
+				marks: [
+					Plot.contour(volcano.values, {
+						width: volcano.width,
+						height: volcano.height,
+						fill: Plot.identity,
+						stroke: "black",
+					}),
+				],
 			}}
 		/>
 	</details>

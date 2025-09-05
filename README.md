@@ -1,7 +1,7 @@
 <!-- 
 nom : Chevallot 
 prénom : loréna
-lien Netlify: thriving-kataifi-e4cbac.netlify.app
+lien Netlify: https://resplendent-yeot-45aa51.netlify.app/
 lien observable : https://observablehq.com/@observablehq/plot-gradient-encoding
 -->
 
